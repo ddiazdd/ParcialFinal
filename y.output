@@ -1,0 +1,184 @@
+   0  $accept : S $end
+
+   1  S : S '+' S
+   2    | S S
+   3    | '(' S ')'
+   4    | S '*'
+   5    | ANY
+
+   6  ANY : ANY
+   7      |
+
+0: shift/reduce conflict (shift 1, reduce 7) on '('
+state 0
+	$accept : . S $end  (0)
+	ANY : .  (7)
+
+	'('  shift 1
+	$end  reduce 7
+	'+'  reduce 7
+	'*'  reduce 7
+
+	S  goto 2
+	ANY  goto 3
+
+
+1: shift/reduce conflict (shift 1, reduce 7) on '('
+state 1
+	S : '(' . S ')'  (3)
+	ANY : .  (7)
+
+	'('  shift 1
+	'+'  reduce 7
+	')'  reduce 7
+	'*'  reduce 7
+
+	S  goto 4
+	ANY  goto 3
+
+
+2: shift/reduce conflict (shift 5, reduce 7) on '+'
+2: shift/reduce conflict (shift 1, reduce 7) on '('
+2: shift/reduce conflict (shift 6, reduce 7) on '*'
+state 2
+	$accept : S . $end  (0)
+	S : S . '+' S  (1)
+	S : S . S  (2)
+	S : S . '*'  (4)
+	ANY : .  (7)
+
+	$end  accept
+	'+'  shift 5
+	'('  shift 1
+	'*'  shift 6
+	$end  reduce 7
+
+	S  goto 7
+	ANY  goto 3
+
+
+3: reduce/reduce conflict (reduce 5, reduce 6) on $end
+3: reduce/reduce conflict (reduce 5, reduce 6) on '+'
+3: reduce/reduce conflict (reduce 5, reduce 6) on '('
+3: reduce/reduce conflict (reduce 5, reduce 6) on ')'
+3: reduce/reduce conflict (reduce 5, reduce 6) on '*'
+state 3
+	S : ANY .  (5)
+	ANY : ANY .  (6)
+
+	.  reduce 5
+
+
+4: shift/reduce conflict (shift 5, reduce 7) on '+'
+4: shift/reduce conflict (shift 1, reduce 7) on '('
+4: shift/reduce conflict (shift 8, reduce 7) on ')'
+4: shift/reduce conflict (shift 6, reduce 7) on '*'
+state 4
+	S : S . '+' S  (1)
+	S : S . S  (2)
+	S : '(' S . ')'  (3)
+	S : S . '*'  (4)
+	ANY : .  (7)
+
+	'+'  shift 5
+	'('  shift 1
+	')'  shift 8
+	'*'  shift 6
+
+	S  goto 7
+	ANY  goto 3
+
+
+5: shift/reduce conflict (shift 1, reduce 7) on '('
+state 5
+	S : S '+' . S  (1)
+	ANY : .  (7)
+
+	'('  shift 1
+	$end  reduce 7
+	'+'  reduce 7
+	')'  reduce 7
+	'*'  reduce 7
+
+	S  goto 9
+	ANY  goto 3
+
+
+state 6
+	S : S '*' .  (4)
+
+	.  reduce 4
+
+
+7: reduce/reduce conflict (reduce 2, reduce 7) on $end
+7: shift/reduce conflict (shift 5, reduce 2) on '+'
+7: shift/reduce conflict (shift 5, reduce 7) on '+'
+7: shift/reduce conflict (shift 1, reduce 2) on '('
+7: shift/reduce conflict (shift 1, reduce 7) on '('
+7: reduce/reduce conflict (reduce 2, reduce 7) on ')'
+7: shift/reduce conflict (shift 6, reduce 2) on '*'
+7: shift/reduce conflict (shift 6, reduce 7) on '*'
+state 7
+	S : S . '+' S  (1)
+	S : S . S  (2)
+	S : S S .  (2)
+	S : S . '*'  (4)
+	ANY : .  (7)
+
+	'+'  shift 5
+	'('  shift 1
+	'*'  shift 6
+	$end  reduce 2
+	')'  reduce 2
+
+	S  goto 7
+	ANY  goto 3
+
+
+state 8
+	S : '(' S ')' .  (3)
+
+	.  reduce 3
+
+
+9: reduce/reduce conflict (reduce 1, reduce 7) on $end
+9: shift/reduce conflict (shift 5, reduce 1) on '+'
+9: shift/reduce conflict (shift 5, reduce 7) on '+'
+9: shift/reduce conflict (shift 1, reduce 1) on '('
+9: shift/reduce conflict (shift 1, reduce 7) on '('
+9: reduce/reduce conflict (reduce 1, reduce 7) on ')'
+9: shift/reduce conflict (shift 6, reduce 1) on '*'
+9: shift/reduce conflict (shift 6, reduce 7) on '*'
+state 9
+	S : S . '+' S  (1)
+	S : S '+' S .  (1)
+	S : S . S  (2)
+	S : S . '*'  (4)
+	ANY : .  (7)
+
+	'+'  shift 5
+	'('  shift 1
+	'*'  shift 6
+	$end  reduce 1
+	')'  reduce 1
+
+	S  goto 7
+	ANY  goto 3
+
+
+Rules never reduced:
+	ANY : ANY  (6)
+
+
+State 0 contains 1 shift/reduce conflict.
+State 1 contains 1 shift/reduce conflict.
+State 2 contains 3 shift/reduce conflicts.
+State 3 contains 5 reduce/reduce conflicts.
+State 4 contains 4 shift/reduce conflicts.
+State 5 contains 1 shift/reduce conflict.
+State 7 contains 6 shift/reduce conflicts, 2 reduce/reduce conflicts.
+State 9 contains 6 shift/reduce conflicts, 2 reduce/reduce conflicts.
+
+
+6 terminals, 3 nonterminals
+8 grammar rules, 10 states
